@@ -1,4 +1,5 @@
 # LangChain Tutorial: Creating Chains with LLMs
+author tomas felipe ramirez alvarez
 
 A beginner-friendly implementation of the [LangChain LLM Chain Tutorial](https://python.langchain.com/docs/tutorials/llm_chain/), demonstrating how to build a simple conversational application using LangChain and the Groq API.
 
@@ -106,7 +107,7 @@ chain = prompt | llm | output_parser
 
 ## Configuration
 
-For this tutorial, the safest and recommended way to manage your Groq API key is using a `.env` file.
+For this tutorial, we use the safest and most recommended way to manage our Groq API is by using a `.env` file.
 
 ### 1. Create the .env file
 
