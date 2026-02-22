@@ -105,23 +105,27 @@ chain = prompt | llm | output_parser
 
 ## Configuración
 
-Para este tutorial, la clave de la API de Groq se ha añadido directamente en el cuaderno `experimento.ipynb` para simplificar la configuración.
+Para este tutorial, la clave de la API de Groq se configura mediante una variable de entorno para mantenerla segura.
 
-```python
-# Fichero: experimento.ipynb
+### Configurar la variable de entorno
 
-GROQ_API_KEY = 'gsk_...tu_clave_aqui...'
-os.environ['GROQ_API_KEY'] = GROQ_API_KEY
+**Windows (PowerShell):**
+```powershell
+setx GROQ_API_KEY "tu_clave_aqui"
 ```
+*(Nota: Reinicia tu terminal o editor después de ejecutar este comando).*
 
-> **Nota de Seguridad:** Guardar claves de API directamente en el código no es una práctica recomendada para aplicaciones en producción. Para un proyecto real, deberías usar variables de entorno (por ejemplo, cargadas desde un archivo `.env`) para mantener tus claves seguras.
+**Linux / macOS:**
+```bash
+export GROQ_API_KEY='tu_clave_aqui'
+```
 
 ---
 
 ## Ejecución del Código
 
-1.  Abre el archivo `experimento.ipynb` en un editor compatible con Jupyter Notebooks (como VS Code).
-2.  Asegúrate de que la `GROQ_API_KEY` en la tercera celda está actualizada con tu propia clave.
+1.  Abre el archivo `tutorial.ipynb` en un editor compatible con Jupyter Notebooks (como VS Code).
+2.  Asegúrate de haber configurado tu `GROQ_API_KEY` como se describe arriba.
 3.  Ejecuta cada celda del cuaderno en orden, de arriba hacia abajo.
 
 La última celda construirá la cadena y la ejecutará con tres preguntas de ejemplo en español, imprimiendo las respuestas directamente en la salida de la celda.
@@ -130,7 +134,7 @@ La última celda construirá la cadena y la ejecutará con tres preguntas de eje
 
 ## Resumen del Código
 
-### `experimento.ipynb`
+### `tutorial.ipynb`
 
 ```python
 # 1. Plantilla de Prompt — estructura la conversación
