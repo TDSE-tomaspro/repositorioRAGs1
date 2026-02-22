@@ -1,60 +1,60 @@
-# Tutorial de LangChain: Creando Cadenas con LLMs
+# LangChain Tutorial: Creating Chains with LLMs
 
-Una implementación para principiantes del [Tutorial de Cadenas con LLMs de LangChain](https://python.langchain.com/docs/tutorials/llm_chain/), que demuestra cómo construir una aplicación conversacional simple usando LangChain y la API de Groq.
-
----
-
-## Tabla de Contenidos
-
-- [Arquitectura del Proyecto](#arquitectura-del-proyecto)
-- [Componentes](#componentes)
-- [Prerrequisitos](#prerrequisitos)
-- [Instalación](#instalación)
-- [Configuración](#configuración)
-- [Ejecución del Código](#ejecución-del-código)
-- [Resumen del Código](#resumen-del-código)
-- [Ejemplo de Salida](#ejemplo-de-salida)
-- [Referencias](#referencias)
+A beginner-friendly implementation of the [LangChain LLM Chain Tutorial](https://python.langchain.com/docs/tutorials/llm_chain/), demonstrating how to build a simple conversational application using LangChain and the Groq API.
 
 ---
 
-## Arquitectura del Proyecto
+## Table of Contents
+
+- [Project Architecture](#project-architecture)
+- [Components](#components)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Running the Code](#running-the-code)
+- [Code Summary](#code-summary)
+- [Example Output](#example-output)
+- [References](#references)
+
+---
+
+## Project Architecture
 
 ```
 ┌─────────────────────────────────────────────────┐
-│                  Entrada del Usuario            │
-│             (pregunta / prompt)                 │
+│                  User Input                     │
+│             (question / prompt)                 │
 └───────────────────────┬─────────────────────────┘
                         │
                         ▼
 ┌─────────────────────────────────────────────────┐
 │           ChatPromptTemplate                    │
-│  Formatea la pregunta en un prompt estructurado│
-│  con un mensaje de sistema y un mensaje humano  │
+│  Formats the question into a structured prompt  │
+│  with a system message and a human message      │
 └───────────────────────┬─────────────────────────┘
                         │
                         ▼
 ┌─────────────────────────────────────────────────┐
 │               ChatGroq (LLM)                    │
-│  Envía el prompt formateado a la API de Groq    │
-│  y devuelve un objeto AIMessage                 │
+│  Sends the formatted prompt to the Groq API     │
+│  and returns an AIMessage object                │
 └───────────────────────┬─────────────────────────┘
                         │
                         ▼
 ┌─────────────────────────────────────────────────┐
 │            StrOutputParser                      │
-│  Extrae la respuesta en texto plano del         │
-│  AIMessage devuelto por el modelo               │
+│  Extracts plain text response from the         │
+│  AIMessage returned by the model                │
 └───────────────────────┬─────────────────────────┘
                         │
                         ▼
 ┌─────────────────────────────────────────────────┐
-│                  Salida                         │
-│            (respuesta en texto plano)           │
+│                  Output                         │
+│            (plain text response)                │
 └─────────────────────────────────────────────────┘
 ```
 
-Los tres componentes están conectados usando el **Lenguaje de Expresión de LangChain (LCEL)** con el operador de tubería (`|`):
+The three components are connected using the **LangChain Expression Language (LCEL)** with the pipe operator (`|`):
 
 ```python
 chain = prompt | llm | output_parser
@@ -62,40 +62,41 @@ chain = prompt | llm | output_parser
 
 ---
 
-## Componentes
+## Components
 
-| Componente | Descripción |
+| Component | Description |
 |-----------|-------------|
-| `ChatPromptTemplate` | Define la estructura del prompt enviado al modelo. Combina un mensaje de *sistema* (establece el rol del asistente) con un mensaje *humano* (la pregunta del usuario). |
-| `ChatGroq` | Un envoltorio (wrapper) para la API de Chat de Groq. Acepta el prompt formateado y devuelve una respuesta del modelo. |
-| `StrOutputParser` | Convierte el objeto `AIMessage` devuelto por el LLM en una cadena de texto simple de Python. |
+| `ChatPromptTemplate` | Defines the structure of the prompt sent to the model. Combines a *system* message (sets the assistant's role) with a *human* message (the user's question). |
+| `ChatGroq` | A wrapper for the Groq Chat API. Accepts the formatted prompt and returns a model response. |
+| `StrOutputParser` | Converts the `AIMessage` object returned by the LLM into a simple Python string. |
 
 ---
 
-## Prerrequisitos
+## Prerequisites
 
-- Python **3.9** o superior
-- Una **Clave de API de Groq** ([puedes crear una aquí](https://console.groq.com/keys))
+- Python **3.9** or higher
+- A **Groq API Key** ([you can create one here](https://console.groq.com/keys))
 
 ---
 
-## Instalación
+## Installation
 
-1.  **Clona el repositorio**
+1.  **Clone the repository**
 
     ```bash
     git clone https://github.com/TDSE-tomaspro/ntroduction_to_Creating_RAGs_1.git
     cd ntroduction_to_Creating_RAGs_1
     ```
 
-2.  **Crea un entorno virtual** (recomendado)
+2.  **Create a virtual environment** (recommended)
 
     ```bash
     python -m venv .venv
-    source .venv/bin/activate
+    # On Windows:
+    .venv\Scripts\activate
     ```
 
-3.  **Instala las dependencias**
+3.  **Install dependencies**
 
     ```bash
     pip install -r requirements.txt
@@ -103,23 +104,23 @@ chain = prompt | llm | output_parser
 
 ---
 
-## Configuración
+## Configuration
 
-Para este tutorial, la forma más segura y recomendada de gestionar tu clave de API de Groq es mediante un archivo `.env`.
+For this tutorial, the safest and recommended way to manage your Groq API key is using a `.env` file.
 
-### 1. Crear el archivo .env
+### 1. Create the .env file
 
-En la raíz del proyecto, crea un archivo llamado `.env` y añade tu clave:
+In the project root, create a file named `.env` and add your key:
 
 ```text
-GROQ_API_KEY=tu_clave_de_groq_aqui
+GROQ_API_KEY=your_groq_key_here
 ```
 
-*Nota: El archivo `.env` ya está incluido en `.gitignore`, por lo que nunca se subirá a GitHub.*
+*Note: The `.env` file is already included in `.gitignore`, so it will never be uploaded to GitHub.*
 
-### 2. Instalación de dependencias adicionales
+### 2. Install additional dependencies
 
-Este método requiere la librería `python-dotenv`:
+This method requires the `python-dotenv` library:
 
 ```bash
 pip install python-dotenv
@@ -127,80 +128,69 @@ pip install python-dotenv
 
 ---
 
-## Ejecución del Código
+## Running the Code
 
-1.  Abre el archivo `tutorial.ipynb` en un editor compatible con Jupyter Notebooks (como VS Code).
-2.  Asegúrate de haber configurado tu `GROQ_API_KEY` como se describe arriba.
-3.  Ejecuta cada celda del cuaderno en orden, de arriba hacia abajo.
+1.  Open the `tutorial.ipynb` file in an editor compatible with Jupyter Notebooks (like VS Code).
+2.  Ensure you have configured your `GROQ_API_KEY` as described above.
+3.  Run each cell in the notebook sequentially from top to bottom.
 
-La última celda construirá la cadena y la ejecutará con tres preguntas de ejemplo en español, imprimiendo las respuestas directamente en la salida de la celda.
+The last cell will build the chain and execute it with three example questions, printing the answers directly in the cell output.
 
 ---
 
-## Resumen del Código
+## Code Summary
 
 ### `tutorial.ipynb`
 
 ```python
-# 1. Plantilla de Prompt — estructura la conversación
+# 1. Prompt Template — structures the conversation
 prompt = ChatPromptTemplate.from_messages([
-    ("system", "Eres un asistente servicial. Responde a la pregunta del usuario de forma clara y concisa."),
+    ("system", "You are a helpful assistant. Answer the user's question clearly and concisely."),
     ("human", "{question}"),
 ])
 
-# 2. Modelo de Lenguaje — llama a la API de Groq
+# 2. Language Model — calls the Groq API
 llm = ChatGroq(model="llama-3.1-8b-instant", temperature=0.7)
 
-# 3. Parser de Salida — extrae el texto de la respuesta
+# 3. Output Parser — extracts text from the response
 output_parser = StrOutputParser()
 
-# 4. Cadena — conecta los tres componentes usando LCEL
+# 4. Chain — connects the three components using LCEL
 chain = prompt | llm | output_parser
 
-# 5. Invocación — ejecuta la cadena con una pregunta
-response = chain.invoke({"question": "¿Qué es LangChain?"})
+# 5. Invocation — executes the chain with a question
+response = chain.invoke({"question": "What is LangChain?"})
 ```
 
-**Funciones clave:**
+**Key Functions:**
 
-| Función | Descripción |
+| Function | Description |
 |----------|-------------|
-| `build_chain(model_name, temperature)` | Construye y devuelve la cadena del LLM. |
-| `ask(question, chain)` | Invoca la cadena con una pregunta y devuelve la respuesta. |
+| `build_chain(model_name, temperature)` | Builds and returns the LLM chain. |
+| `ask(question, chain)` | Invokes the chain with a question and returns the response. |
 
 ---
 
-## Ejemplo de Salida
+## Example Output
 
 ```
-Pregunta: ¿Qué es LangChain y para qué se utiliza?
-Respuesta:   LangChain es un marco de código abierto para construir aplicaciones impulsadas por modelos de lenguaje grandes (LLM). Proporciona herramientas y abstracciones para crear aplicaciones que pueden razonar, actuar y personalizarse con datos.
+Question: What is LangChain and what is it used for?
+Answer:   LangChain is an open-source framework for building applications powered by large language models (LLMs). It provides tools and abstractions to create applications that can reason, act, and be customized with data.
 
-Se utiliza para:
-* **Crear chatbots y asistentes virtuales:** LangChain facilita la creación de interfaces conversacionales que pueden interactuar con los usuarios de forma natural.
-* **Resumir texto:** Puede resumir documentos largos en resúmenes concisos.
-* **Responder preguntas:** Puede responder preguntas sobre un conjunto de datos o un dominio de conocimiento específico.
-* **Generar texto:** Puede generar texto creativo, como poemas, guiones o correos electrónicos.
-------------------------------------------------------------
-Pregunta: Explica el concepto de plantillas de prompt en términos sencillos.
-Respuesta:   Imagina que tienes un formulario con espacios en blanco. Una plantilla de prompt es como ese formulario, pero para un modelo de lenguaje.
-
-En lugar de escribir la misma instrucción una y otra vez, creas una plantilla con "marcadores de posición" (variables). Luego, llenas esos marcadores de posición con información específica cada vez que usas la plantilla.
-
-Por ejemplo, una plantilla podría ser: "Traduce la siguiente frase al {idioma}: {frase}".
-
-Aquí, `{idioma}` y `{frase}` son los marcadores de posición. Puedes reutilizar esta plantilla para traducir cualquier frase a cualquier idioma, simplemente cambiando los valores de los marcadores de posición.
-
-En resumen, las plantillas de prompt son una forma de crear instrucciones reutilizables y dinámicas para los modelos de lenguaje.
+It is used for:
+* **Creating chatbots and virtual assistants:** LangChain makes it easy to build conversational interfaces.
+* **Text summarization:** It can summarize long documents into concise overviews.
+* **Question answering:** It can answer questions about a specific dataset or knowledge domain.
+* **Text generation:** It can generate creative text like poems, scripts, or emails.
 ------------------------------------------------------------
 ...
 ```
 
 ---
 
-## Referencias
+## References
 
 - [LangChain LLM Chain Tutorial](https://python.langchain.com/docs/tutorials/llm_chain/)
-- [Documentación de LangChain](https://python.langchain.com/docs/introduction/)
+- [LangChain Documentation](https://python.langchain.com/docs/introduction/)
 - [LangChain Expression Language (LCEL)](https://python.langchain.com/docs/concepts/lcel/)
-- [Documentación de la API de Groq](https://console.groq.com/docs)
+- [Groq API Documentation](https://console.groq.com/docs)
