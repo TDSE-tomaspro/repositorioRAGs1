@@ -105,19 +105,24 @@ chain = prompt | llm | output_parser
 
 ## Configuración
 
-Para este tutorial, la clave de la API de Groq se configura mediante una variable de entorno para mantenerla segura.
+Para este tutorial, la forma más segura y recomendada de gestionar tu clave de API de Groq es mediante un archivo `.env`.
 
-### Configurar la variable de entorno
+### 1. Crear el archivo .env
 
-**Windows (PowerShell):**
-```powershell
-setx GROQ_API_KEY "tu_clave_aqui"
+En la raíz del proyecto, crea un archivo llamado `.env` y añade tu clave:
+
+```text
+GROQ_API_KEY=tu_clave_de_groq_aqui
 ```
-*(Nota: Reinicia tu terminal o editor después de ejecutar este comando).*
 
-**Linux / macOS:**
+*Nota: El archivo `.env` ya está incluido en `.gitignore`, por lo que nunca se subirá a GitHub.*
+
+### 2. Instalación de dependencias adicionales
+
+Este método requiere la librería `python-dotenv`:
+
 ```bash
-export GROQ_API_KEY='tu_clave_aqui'
+pip install python-dotenv
 ```
 
 ---
